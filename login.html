@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>
+        </title>
+        
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.css" />
+        <link rel="stylesheet" href="css/jqmobile.css" />
+
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+        <script src="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.js"></script>
+        <script src="javascript/jquery.jsoncookie.js"></script>
+        <script src="javascript/jquery.crypt.js"></script>
+        
+        <script src="javascript/jqmobile.js"></script>
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    </head>
+    <body>  
+            <div data-role="page" id="login">
+                   <div data-theme="a" data-role="header">
+                       <h1>
+                           Login to Point Recorder
+                       </h1>
+                       <div data-role="navbar" data-iconpos="top">
+                           <ul>
+                               <li>
+                                   <a href="index.html" rel="external" data-theme="" data-icon="home">
+                                       Home
+                                   </a>
+                               </li>
+                               <li>
+                                   <a href="index.html#public" rel="external" data-theme="" data-icon="grid">
+                                       Public
+                                   </a>
+                               </li>
+                               <li>
+                                   <a href="index.html#near" rel="external" data-theme="" data-icon="search">
+                                       Nearby
+                                   </a>
+                               </li>
+                           </ul>
+                       </div>
+                   </div>
+                   
+                   <div data-role="content">
+
+                       
+                       <form id="login_form">
+	                       <input type="hidden" name='lat' id='login_lat' value='0'>
+                   		   <input type="hidden" name='lng' id='login_lng' value='0'>
+                   		
+                          <div data-role="fieldcontain">
+                              <fieldset data-role="controlgroup">
+                                  <label for="name">
+                                  </label>
+                                  <input id="name" name="name" placeholder="Username" value="" type="text" />
+                              </fieldset>
+                              <fieldset data-role="controlgroup">
+                                  <label for="email">
+                                  </label>
+                                  <input id="password" name="password" placeholder="password" value="" type="password" />
+                              </fieldset>
+                          </div>
+                          
+                          <input type="submit" value="Submit" id="login_submit" />
+                        </form>
+                        
+                        <div id="login_success_message" style="display:none">
+                            <h3>Success</h3> 
+                            <p>You have been logged in  Go <a href="login.html" rel="external" id="back_link">here</a> to view your applets.</p>
+                        </div>
+
+                        <div id="login_error_message" style="display:none">
+                            <h3>Error</h3> 
+                            <p>There was an error. Go <a href="#" id="back_link">back</a> to try again.<p>
+                        </div>
+                        
+                        <div id="logged_in" style="display:none">
+                           <div class="content-primary">
+                               <ul data-role="listview" data-divider-theme="b" data-inset="true" id="my_listings" data-filter="true">
+                                   <li data-role="list-divider" role="heading">
+                                       My Applets
+                                   </li>
+                               </ul>
+                           </div>
+                           <a href="#" id="logout" data-role="button">Log Out</a>
+                        </div>
+                        
+                        
+                        
+                   </div>
+               </div>
+
+        <script>
+        $( '#login' ).live( 'pageinit',function(event){
+              login()
+          });
+          
+          
+            // -----------------------------------------
+            //  Applet page code stuff!
+            // -----------------------------------------
+
+            $("a[href=#applet]").live("click", 
+                                function(e) {
+                                    id = $(this).data("applet");
+                                     $.mobile.changePage('applet.html')        
+                                }
+                          );
+
+
+            $( '#applet' ).live( 'pageinit',function(event){
+                applet_actions(id)
+            });
+
+
+
+            $("a[href=#map]").live("click", 
+                                function(e) {
+                                    id = $(this).data("applet");
+                                    console.log(id)
+                                     $.mobile.changePage('map.html')        
+                                }
+                          );
+
+
+            $( '#map' ).live( 'pageinit',function(event){
+                start_map(id)
+            });
+
+        </script>
+    </body>
+</html>

@@ -1,0 +1,51 @@
+.nearbyImg,.locationImg,.byNameImg,.myOTImg {
+display: block;
+background-image: url(../images/home-sprite.png);
+background-repeat: no-repeat;
+height: 80px;
+width: 80px;
+margin: 29px auto 0;
+}
+.nearbyImg {
+background-position: -31px -1597px;
+}
+.locationImg {
+background-position: -31px -295px;
+}
+.byNameImg {
+background-position: -31px -729px;
+}
+.myOTImg {
+background-position: -31px -1163px;
+}
+.ui-listview .ui-li,.tileDiv,.clickable {
+cursor: pointer;
+}
+img.tile {
+margin-top: 19px;
+}
+.homeBody .tileDiv {
+height: 160px;
+line-height: 16px;
+width: 49%;
+color: #42382C;
+letter-spacing: .05em;
+}
+.homeBody .tileLabel {
+margin-top: 10px;
+}
+.homeBody .tileBorderRight {
+border-right: 1px solid #fff;
+}
+.homeBody .tileBorderTop {
+border-top: 1px solid #fff;
+opacity: .75;
+}
+.homeBody .disable-image {
+opacity: .20;
+}
+.homeBody {
+font-size: 15px;
+letter-spacing: .03em;
+text-align: center;
+}

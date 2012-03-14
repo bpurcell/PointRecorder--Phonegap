@@ -1,0 +1,107 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>
+        </title>
+
+        <link rel="apple-touch-icon" sizes="114x114" id="large_icon" href=""/>
+        <link rel="apple-touch-icon" sizes="57x57" id="small_icon" href=""/>
+        
+        
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.css" />
+        <link rel="stylesheet" href="css/jqmobile.css" />
+
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+        <script src="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.js"></script>
+        <script src="javascript/jquery.jsoncookie.js"></script>
+        <script src="javascript/jquery.crypt.js"></script>
+        
+        <script src="javascript/jqmobile.js"></script>
+        
+        
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    </head>
+    <body>  
+            <div data-role="page" id="map">
+                   <div data-theme="a" data-role="header">
+                       <h1>
+                           Point Recorder - Map
+                       </h1>
+                       <div data-role="navbar" data-iconpos="top">
+                           <ul>
+                               <li>
+                                   <a href="index.html" rel="external" data-theme="" data-icon="home">
+                                       Home
+                                   </a>
+                               </li>
+                               <li>
+                                   <a href="index.html#public" rel="external" data-theme="" data-icon="grid">
+                                       Public
+                                   </a>
+                               </li>
+                               <li>
+                                   <a href="index.html#near" rel="external" data-theme="" data-icon="search">
+                                       Nearby
+                                   </a>
+                               </li>
+                           </ul>
+                       </div>
+                   </div>
+                   
+                   <div data-role="content">
+                       <div  id="content" style="height:400px;">
+                        </div>
+                   </div>
+                   
+                   <div data-role="footer" data-position="fixed"> 
+                        <div data-role="navbar" data-iconpos="top">
+                               <ul>
+                                   <li>
+                                      <a href="#applet" id="back_to_applet" data-role="button"  data-transition="slide" data-direction="reverse">Back to applet</a>
+                                   </li>
+                                </ul>
+                        </div>
+                   </div>
+               </div>
+               
+               
+
+        <script>
+        function getUrlVars() {
+            var vars = [], hash;
+            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for(var i = 0; i < hashes.length; i++)
+            {
+                hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1].replace("#", "");
+            }
+            return vars;
+        }
+        
+        $( '#map' ).live( 'pageinit',function(event){
+            
+            var id = getUrlVars()["id"];
+              start_map(id)
+          });
+        
+        
+          $("a[href=#applet]").live("click", 
+                              function(e) {
+                                  id = $(this).data("applet");
+                                   $.mobile.changePage('applet.html')        
+                              }
+                        );
+          
+          
+          $( '#applet' ).live( 'pageinit',function(event){
+              applet_actions(id)
+          });
+        
+        
+        </script>
+    </body>
+</html>

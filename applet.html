@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>
+        </title>
+
+        <link rel="apple-touch-icon" sizes="114x114" id="large_icon" href=""/>
+        <link rel="apple-touch-icon" sizes="57x57" id="small_icon" href=""/>
+        
+        
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.css" />
+        <link rel="stylesheet" href="css/jqmobile.css" />
+
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+        <script src="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.js"></script>
+        <script src="javascript/jquery.jsoncookie.js"></script>
+        <script src="javascript/jquery.crypt.js"></script>
+        
+        <script src="javascript/jqmobile.js"></script>
+        
+        
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    </head>
+    <body>  
+            <div data-role="page" id="applet">
+                   <div data-theme="a" data-role="header">
+                       <h1 id="applet_name">
+                           PR - applet
+                       </h1>
+                       <div data-role="navbar" data-iconpos="top">
+                           <ul>
+                               <li>
+                                   <a href="index.html" rel="external" data-theme="" data-icon="home">
+                                       Home
+                                   </a>
+                               </li>
+                               <li>
+                                   <a href="index.html#public" rel="external" data-theme="" data-icon="grid">
+                                       Public
+                                   </a>
+                               </li>
+                               <li>
+                                   <a href="index.html#near" rel="external" data-theme="" data-icon="search">
+                                       Nearby
+                                   </a>
+                               </li>
+                           </ul>
+                       </div>
+                   </div>
+                   
+                   <div data-role="content">
+
+                       <img style="float:right;padding:10px 0 10px 5px;" src="" id="icon_primary">
+                       <p id="applet_desc"></p>
+                       
+                       <form id="form_serial">
+                           
+                           <input type="hidden" name='phonegap' id='phonegap' value='true'>
+                   	       <input type="hidden" name='lat' id='lat' value='0'>
+                   		   <input type="hidden" name='lng' id='lng' value='0'>
+                   		   <input type="hidden" name='applet_id' id='applet_id' value=''>
+                   		
+                          <div data-role="fieldcontain">
+                              <fieldset data-role="controlgroup">
+                                  <label for="name">
+                                  </label>
+                                  <input id="name" name="name" placeholder="Name" value="" type="text" />
+                              </fieldset>
+                              <fieldset data-role="controlgroup">
+                                  <label for="email">
+                                  </label>
+                                  <input id="email" name="email" placeholder="Email" value="" type="email" />
+                              </fieldset>
+
+
+                              <label for="category">
+                                  Choose:
+                              </label>
+                              <select name="category" id="parse_category">
+                              </select>
+
+                              <fieldset data-role="controlgroup">
+                                  <label for="location_name">
+                                      Location Name
+                                  </label>
+                                  <input id="location_name" name="location_name" placeholder="" value="" type="text" />
+                              </fieldset>
+
+                              <fieldset data-role="controlgroup">
+                                  <label for="comment">
+                                      Comment
+                                  </label>
+<textarea id="comment" name="comment" placeholder="">
+</textarea>
+                              </fieldset>
+                          </div>
+                          <input type="submit" value="Submit" id="form_submit" />
+                        </form>
+                        
+                        <div id="success_message" style="display:none">
+                            <p><span class="header">Success</span> Your Location was successfully submitted via the Point Recorder Phone App.</p> 
+                                <a href="#" id="add_more_link" data-role="button">Add More</a>
+                            
+                           <div id="uploadoption"  data-role="controlgroup">
+                                <button id="camera_image" data-role="button">From Camera</button>
+                                <button onclick="getImage(1)" id="lib_image" data-role="button">From Photo Library</button>
+                	    	    <input type="hidden" name='location_id' id='location_id' value=''>
+                	    	</div>
+                	    	
+                	    	<div id="image_successfully_uploaded" style="display:none">
+                                Your Photo has been uploaded and is attached to this location.  You can only have one image per location.
+                            </div>
+                        </div>
+
+                        <div id="error_message" style="display:none">
+                            <p><span class="header">Error</span> There was an error.  It seems you were outside the area which you can submit locations for this app.<p>
+                             <a href="#" id="back_link" data-role="button">Back</a>
+                        </div>
+                        
+                        <a href="#map" id="map" data-role="button">View Map</a>
+                   </div>
+                   
+                   <div data-role="footer"> 
+                   	<h5>&copy; Poros Ventures - <a href="http://www.pointrecorder.com">Desktop Version</a></h5> 
+                   </div>
+               </div>
+               
+               
+
+        <script>
+        function getUrlVars() {
+            var vars = [], hash;
+            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for(var i = 0; i < hashes.length; i++)
+            {
+                hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1].replace("#", "");
+            }
+            return vars;
+        }
+        
+        $( '#applet' ).live( 'pageinit',function(event){
+            var id = getUrlVars()["id"];
+              applet_actions(id)
+          });
+          
+          $("a[href=#map]").live("click", 
+                              function(e) {
+                                  id = $(this).data("applet");
+                                   $.mobile.changePage('map.html')        
+                              }
+                        );
+          
+          
+          $( '#map' ).live( 'pageinit',function(event){
+              start_map(id)
+          });
+        
+        </script>
+    </body>
+</html>
