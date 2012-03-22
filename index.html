@@ -10,14 +10,15 @@
         <link rel="apple-touch-icon" sizes="57x57" id="small_icon" href=""/>
         
         
-        <script src="javascript/phonegap.js"></script>
+       
         
-        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.css" />
+        <link rel="stylesheet" href="css/style.css" />
         <link rel="stylesheet" href="css/jqmobile.css" />
         
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+         <script src="javascript/phonegap.js"></script>
+        <script src="javascript/jquery.js"></script>
         
-        <script src="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.js"></script>
+        <script src="javascript/mobile.js"></script>
         
         <script src="javascript/jquery.jsoncookie.js"></script>
         <script src="javascript/jquery.crypt.js"></script>
@@ -25,79 +26,13 @@
         <script src="javascript/jqmobile.js"></script>
         
         <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
-        
-        
-        <script>
-            document.addEventListener("deviceready",onDeviceReady,false);
-            
-            function onDeviceReady()
-            {
-                getRecentListing();
-            }
-            
-            $('#page').live( 'pageinit',function(event){
-                            getRecentListing();
-                            });
-            
-            $('#public').live( 'pageinit',function(event){
-                              getPublicListing();
-                              });
-            $('#near').live( 'pageinit',function(event){
-                            navigator.geolocation.getCurrentPosition(getNearListing, onError);
-                            });
 
-            
-            // -----------------------------------------
-            //  Applet page code stuff!
-            // -----------------------------------------
-            
-            $("a[href=#applet]").live("click", 
-                                      function(e) {
-                                      id = $(this).data("applet");
-                                      $.mobile.changePage('applet.html')        
-                                      }
-                                      );
-            
-            
-            $( '#applet' ).live( 'pageinit',function(event){
-                                applet_actions(id)
-                                });
-            
-            
-            
-            $("a[href=#map]").live("click", 
-                                   function(e) {
-                                   id = $(this).data("applet");
-                                   console.log(id)
-                                   $.mobile.changePage('map.html')        
-                                   }
-                                   );
-            
-            
-            $( '#map' ).live( 'pageinit',function(event){
-                             start_map(id)
-                             });
-            
-            
-            $("a[href=#login]").live("click", 
-                                     function(e) {
-                                     $.mobile.changePage('login.html')        
-                                     }
-                                     );
-            
-            $( '#login' ).live( 'pageinit',function(event){
-                               login()
-                               });
-            
-            </script>
-        
-        
     </head>
     <body>
         <div data-role="page">
             <div data-theme="a" data-role="header" data-position="fixed">
                 <h1>
-                    Point Recorder - Home
+                    Point Recorder
                 </h1>
                 <div data-role="navbar" data-iconpos="top">
                     <ul>
@@ -108,12 +43,12 @@
                         </li>
                         <li>
                             <a href="#public" data-theme="" data-icon="grid"  data-transition="slide">
-                                Public
+                                Applets
                             </a>
                         </li>
                         <li>
-                            <a href="#near" data-theme="" data-icon="search"  data-transition="slide">
-                                Nearby
+                            <a href="#login" data-theme="" data-icon="search"  data-transition="slide">
+                                Account
                             </a>
                         </li>
                     </ul>
@@ -122,19 +57,19 @@
             <div data-role="content" class="homeBody">
                 <div class="ui-grid-a">
         			<div class="ui-block-a tileDiv tileBorderRight">			
-        				<a class="wrapper" href="#near" id="Nearby"><span id="NearbyIcon" class="nearbyImg"></span></a>
+        				<a class="wrapper" href="#public" id="Nearby"><span id="NearbyIcon" class="nearbyImg"></span></a>
         				<div id="LblNearby"  class="tileLabel">Nearby</div>
         				<div id="LblNearbyStatus"></div>
         			</div>
         			<div class="ui-block-b tileDiv">
         				<a class="wrapper" href="#public" id="Location"><span class="locationImg"></span></a>
-        				<div id="LblLocation" class="tileLabel">Public</div>
+        				<div id="LblLocation" class="tileLabel">Applets</div>
         			</div>
         		</div>
         		<div class="ui-grid-a">
         			<div class="ui-block-a tileDiv tileBorderRight tileBorderTop">
-        				<a class="wrapper" href="#search" id="ByName"><span class="byNameImg"></span></a>
-        				<div id="LblByName" class="tileLabel">Search for Applet</div>
+        				<a class="wrapper" href="#about" id="ByName"><span class="byNameImg"></span></a>
+        				<div id="LblByName" class="tileLabel">About</div>
         			</div>
         			<div class="ui-block-b tileDiv tileBorderTop">
         				<a class="wrapper"  href="#login" id="MyOpenTable"><span class="myOTImg"></span></a>
@@ -162,30 +97,30 @@
             </div>
             
             <div data-role="footer"> 
-            	<h5>&copy; Poros Ventures - <a href="http://www.pointrecorder.com">Desktop Version</a></h5> 
+            	<h5>&copy; Poros Ventures - <a href="http://www.pointrecorder.com"  rel="external">Desktop Version</a></h5> 
             </div>
         </div>
         
         <div data-role="page" id="public">
             <div data-theme="a" data-role="header" data-position="fixed">
                 <h1>
-                    Public Applets
+                 Applets
                 </h1>
                 <div data-role="navbar" data-iconpos="top">
                     <ul>
                         <li>
-                            <a href="index.html" data-theme="" data-icon="home"  data-transition="slide" data-direction="reverse">
+                            <a href="index.html" data-theme="" data-icon="home" data-transition="slide"  data-direction="reverse">
                                 Home
                             </a>
                         </li>
                         <li>
-                            <a href="#public" data-theme="" data-icon="grid" class="ui-btn-active">
-                                Popular
+                            <a href="#public" data-theme="" data-icon="grid"  class="ui-btn-active">
+                                Applets
                             </a>
                         </li>
                         <li>
-                            <a href="#near" data-theme="" data-icon="search" data-transition="slide">
-                                Nearby
+                            <a href="#login" data-theme="" data-icon="search"  data-transition="slide">
+                                Account
                             </a>
                         </li>
                     </ul>
@@ -195,39 +130,35 @@
                 
                 <div class="content-primary">
                     <ul data-role="listview" data-divider-theme="b" data-inset="true" id="public_listings"  data-filter="true">
-                        <li data-role="list-divider" role="heading">
-                            Public Listings
-                        </li>
-                        
+
                     </ul>
                 </div>
             </div>
             
             <div data-role="footer"> 
-            	<h5>&copy; Poros Ventures - <a href="http://www.pointrecorder.com">Desktop Version</a></h5> 
+            	<h5>&copy; Poros Ventures - <a href="http://www.pointrecorder.com"  rel="external">Desktop Version</a></h5> 
             </div>
         </div>
-        
         <div data-role="page" id="near">
             <div data-theme="a" data-role="header" data-position="fixed">
                 <h1>
-                    Nearby Applets
+                 Applets
                 </h1>
                 <div data-role="navbar" data-iconpos="top">
                     <ul>
                         <li>
-                            <a href="index.html" data-theme="" data-icon="home" data-transition="slide" data-direction="reverse">
+                            <a href="index.html" data-theme="" data-icon="home" data-transition="slide"  data-direction="reverse">
                                 Home
                             </a>
                         </li>
                         <li>
-                            <a href="#public" data-theme="" data-icon="grid" data-transition="slide" data-direction="reverse">
-                                Public
+                            <a href="#public" data-theme="" data-icon="grid"  class="ui-btn-active">
+                                Applets
                             </a>
                         </li>
                         <li>
-                            <a href="#near" data-theme="" data-icon="search" class="ui-btn-active">
-                                Nearby
+                            <a href="#login" data-theme="" data-icon="search"  data-transition="slide">
+                                Account
                             </a>
                         </li>
                     </ul>
@@ -236,17 +167,177 @@
             <div data-role="content">
                 
                 <div class="content-primary">
-                    <ul data-role="listview" data-divider-theme="b" data-inset="true" id="nearby_listings"   data-filter="true">
-                        <li data-role="list-divider" role="heading">
-                            Nearby Applets
-                        </li>
+                    <ul data-role="listview" data-divider-theme="b" data-inset="true" id="near_listings"  data-filter="true">
+
                     </ul>
                 </div>
             </div>
             
             <div data-role="footer"> 
-                <h5>&copy; Poros Ventures - <a href="http://www.pointrecorder.com">Desktop Version</a></h5> 
+            	<h5>&copy; Poros Ventures - <a href="http://www.pointrecorder.com"  rel="external">Desktop Version</a></h5> 
             </div>
         </div>
+        
+        
+        <div data-role="page" id="login">
+               <div data-theme="a" data-role="header">
+                   <h1>
+                       Login
+                   </h1>
+                   <div data-role="navbar" data-iconpos="top">
+                       <ul>
+                           <li>
+                               <a href="index.html" data-theme="" data-icon="home"  data-transition="slide"  data-direction="reverse">
+                                   Home
+                               </a>
+                           </li>
+                           <li>
+                               <a href="#public" data-theme="" data-icon="grid"  data-transition="slide"  data-direction="reverse">
+                                   Applets
+                               </a>
+                           </li>
+                           <li>
+                               <a href="#login" data-theme="" data-icon="search" class="ui-btn-active">
+                                   Account
+                               </a>
+                           </li>
+                       </ul>
+                   </div>
+               </div>
+               
+               <div data-role="content">
+
+                   
+                   <form id="login_form">
+                       <input type="hidden" name='lat' id='login_lat' value='0'>
+               		   <input type="hidden" name='lng' id='login_lng' value='0'>
+               		
+                      <div data-role="fieldcontain">
+                          <fieldset data-role="controlgroup">
+                              <label for="username">
+                              </label>
+                              <input id="username" name="username" placeholder="Username" value="" type="text" />
+                          </fieldset>
+                          <fieldset data-role="controlgroup">
+                              <label for="email">
+                              </label>
+                              <input id="password" name="password" placeholder="password" value="" type="password" />
+                          </fieldset>
+                      </div>
+                      
+                      <input type="submit" value="Submit" id="login_submit" />
+                    </form>
+
+                    <div id="login_error_message" style="display:none">
+                        <h3>Error</h3> 
+                        <p>There was an error. Go <a href="#" id="back_link">back</a> to try again.<p>
+                    </div>
+                    
+                    <div id="logged_in" style="display:none">
+                       <div class="content-primary">
+                           <ul data-role="listview" data-divider-theme="b" data-inset="true" id="my_listings" data-filter="true">
+                               <li data-role="list-divider" role="heading">
+                                   My Applets
+                               </li>
+                           </ul>
+                       </div>
+                       <a href="#" id="logout" data-role="button">Log Out</a>
+                    </div>
+                    
+                    
+                    
+               </div>
+           </div>
+           <div data-role="page" id="about">
+               <div data-theme="a" data-role="header" data-position="fixed">
+                   <h1>
+                    About
+                   </h1>
+                   <div data-role="navbar" data-iconpos="top">
+                       <ul>
+                           <li>
+                               <a href="index.html" data-theme="" data-icon="home" data-transition="slide"  data-direction="reverse">
+                                   Home
+                               </a>
+                           </li>
+                           <li>
+                               <a href="#public" data-theme="" data-icon="grid" data-transition="slide">
+                                   Applets
+                               </a>
+                           </li>
+                           <li>
+                               <a href="#login" data-theme="" data-icon="search"  data-transition="slide">
+                                   Account
+                               </a>
+                           </li>
+                       </ul>
+                   </div>
+               </div>
+               <div data-role="content">
+                   <div data-role="collapsible" data-theme="b" data-content-theme="b">
+                       <h3>What is Point Recorder?</h3>
+                       <p>Point Recorder is a simple, powerful location-aware app builder that can be shared with customers and colleagues so you can start getting useful and usable data immediately
+                       </p>
+                   </div>
+                   <div data-role="collapsible" data-theme="b" data-content-theme="b" style="text-align:left">
+                       <h3>How should I start?</h3>
+                       <p>There are two ways for you to use it</p><ol><li>Go too the <a href="http://pointrecorder.com/">desktop version</a> and make an account.  You can then start sharing the app links and start collecting data.</li><li> Or if someone sent you the applet or you are just interested in giving back you can look for public applets that interest you and start recording data for those applets (graffiti, citizen science, municipality, etc).</li></ol>
+                   </div>
+
+               </div>
+
+               <div data-role="footer"> 
+               	<h5>&copy; Poros Ventures - <a href="http://www.pointrecorder.com"  rel="external">Desktop Version</a></h5> 
+               </div>
+           </div>
+         <script>
+                document.addEventListener("deviceready",onDeviceReady,false);
+
+                function onDeviceReady()
+                {
+                    navigator.geolocation.getCurrentPosition(getNearListing, onError);
+                     getPublic();
+                    var networkState = navigator.network.connection.type; 
+
+            	    var states = {}; 
+            	    states[Connection.UNKNOWN] = 'Unknown connection'; 
+            	    states[Connection.ETHERNET] = 'Ethernet connection'; 
+            	    states[Connection.WIFI] = 'WiFi connection'; 
+            	    states[Connection.CELL_2G] = 'Cell 2G connection'; 
+            	    states[Connection.CELL_3G] = 'Cell 3G connection'; 
+            	    states[Connection.CELL_4G] = 'Cell 4G connection'; 
+            	    states[Connection.NONE] = 'No network connection'; 
+
+            	    if((states[networkState] == 'No network connection') || (states[networkState] == 'Unknown connection'))
+            			{ 
+            	            getRecentListing('applet_cached.html');
+            	        } 
+
+            	    else 
+            	        { 
+            	            var url = "http://maps.google.com"; 
+            	            $.ajax({ 
+            	                type: "GET", 
+            	                data: "{}", 
+            	                url: url, 
+            	                cache: false, 
+            	                timeout: 10 * 1000, 
+            	                success:function(response) 
+            	                { 
+            	                   getRecentListing('applet.html');
+            	                }, 
+            	                error:function(xhr, textStatus, errorThrown) { 
+            	                    getRecentListing('applet_cached.html');
+            	                } 
+                            }); 
+                        }
+                         
+                }
+
+                $( '#login' ).live( 'pageinit',function(event){
+                                   login()
+                                   });
+
+                </script>
     </body>
 </html>

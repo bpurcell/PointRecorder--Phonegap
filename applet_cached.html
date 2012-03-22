@@ -22,12 +22,13 @@
         <script src="javascript/jquery.crypt.js"></script>
         
         <script src="javascript/jqmobile.js"></script>
+        <script src="javascript/jq_cached.js"></script>
         
         
         <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
     </head>
     <body>  
-            <div data-role="page" id="applet">
+            <div data-role="page">
                    <div data-theme="a" data-role="header">
                        <h1 id="applet_name">
                            Applet
@@ -54,8 +55,7 @@
                    </div>
                    
                    <div data-role="content">
-
-                       <img style="float:right;padding:10px 0 10px 5px;" src="" id="icon_primary">
+                       <p><strong>You are currently working in offline mode - you will need to sync your saved locations when back online</strong></p>
                        <p id="applet_desc"></p>
                        
                        <form id="form_serial">
@@ -94,18 +94,10 @@
                         
                         <div id="success_message" style="display:none">
                             <p><span class="header">Success</span> Your Location was successfully submitted via the Point Recorder Phone App.</p> 
-                                <a href="" id="add_more_link" data-role="button">Add More</a>
+                                <a href="" id="add_more_link" rel="external" data-role="button">Add More</a>
                             
-                           <div id="uploadoption"  data-role="controlgroup">
-                                <a id="camera_image" data-role="button">From Camera</a>
-                                <a id="lib_image" data-role="button">From Photo Library</a>
-                	    	</div>
-                	    	
                 	    	<input type="hidden" name='location_id' id='location_id' value=''>
-                	    	
-                	    	<div id="image_successfully_uploaded" style="display:none">
-                                Your Photo has been uploaded and is attached to this location.  You can only have one image per location.
-                            </div>
+
                         </div>
 
                         <div id="error_message" style="display:none">
@@ -113,7 +105,7 @@
                              <a href="" id="back_link" data-role="button">Back</a>
                         </div>
                         
-                        <a href="" id="map_link" data-role="button">View Map</a>
+                        <a href="" id="sync_when_online" data-role="button">Sync offline locations</a>
                    </div>
                    
                    <div data-role="footer"> 
@@ -124,24 +116,56 @@
                
 
         <script>
-        
+    
         document.addEventListener("deviceready",onDeviceReady,false);
 
         function onDeviceReady()
         {
-            navigator.geolocation.getCurrentPosition(onSuccess, onError);
+            var id = getUrlVars()["id"];
+
+                $("#add_more_link").attr("href","applet_cached.html?id=" + id);
+                $("#back_link").attr("href","applet_cached.html?id=" + id);
+
+                applet_actions_cached(id)
+                
+                $('#sync_when_online').click(function() {
+                    var networkState = navigator.network.connection.type; 
+
+            	    var states = {}; 
+            	    states[Connection.UNKNOWN] = 'Unknown connection'; 
+            	    states[Connection.ETHERNET] = 'Ethernet connection'; 
+            	    states[Connection.WIFI] = 'WiFi connection'; 
+            	    states[Connection.CELL_2G] = 'Cell 2G connection'; 
+            	    states[Connection.CELL_3G] = 'Cell 3G connection'; 
+            	    states[Connection.CELL_4G] = 'Cell 4G connection'; 
+            	    states[Connection.NONE] = 'No network connection'; 
+
+            	    if((states[networkState] == 'No network connection') || (states[networkState] == 'Unknown connection'))
+            			{ 
+            	            alert('You are offline. You cannot sync until you are connected again.')
+            	        } 
+
+            	    else 
+            	        { 
+            	            var url = "http://maps.google.com"; 
+            	            $.ajax({ 
+            	                type: "GET", 
+            	                data: "{}", 
+            	                url: url, 
+            	                cache: false, 
+            	                timeout: 10 * 1000, 
+            	                success:function(response) 
+            	                { 
+            	                   syncOnline()
+            	                }, 
+            	                error:function(xhr, textStatus, errorThrown) { 
+            	                    alert('You are offline. You cannot sync until you are connected again.')
+            	                } 
+                            }); 
+                        }
+                });
         }
 
-        $( '#applet' ).live( 'pageinit',function(event){
-          var id = getUrlVars()["id"];
-          
-            $("#add_more_link").attr("href","applet.html?id=" + id);
-            $("#back_link").attr("href","applet.html?id=" + id);
-            $("#map_link").attr("href","map.html?id=" + id);
-            applet_actions(id)
-        });
-
-        
         </script>
     </body>
 </html>

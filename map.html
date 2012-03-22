@@ -10,12 +10,14 @@
         <link rel="apple-touch-icon" sizes="114x114" id="large_icon" href=""/>
         <link rel="apple-touch-icon" sizes="57x57" id="small_icon" href=""/>
         
-        
-        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.css" />
+        <link rel="stylesheet" href="css/style.css" />
         <link rel="stylesheet" href="css/jqmobile.css" />
-
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
-        <script src="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.js"></script>
+        
+         <script src="javascript/phonegap.js"></script>
+        <script src="javascript/jquery.js"></script>
+        
+        <script src="javascript/mobile.js"></script>
+        
         <script src="javascript/jquery.jsoncookie.js"></script>
         <script src="javascript/jquery.crypt.js"></script>
         
@@ -51,16 +53,15 @@
                        </div>
                    </div>
                    
-                   <div data-role="content">
-                       <div  id="content" style="height:400px;">
-                        </div>
+                   <div data-role="content" id="content" style="height:400px;">
+
                    </div>
                    
                    <div data-role="footer" data-position="fixed"> 
                         <div data-role="navbar" data-iconpos="top">
                                <ul>
                                    <li>
-                                      <a href="#applet" id="back_to_applet" data-role="button"  data-transition="slide" data-direction="reverse">Back to applet</a>
+                                      <a href="" id="back_to_applet" rel="external">Back to applet</a>
                                    </li>
                                 </ul>
                         </div>
@@ -83,22 +84,9 @@
         }
         
         $( '#map' ).live( 'pageinit',function(event){
-            
             var id = getUrlVars()["id"];
+            $("#back_to_applet").attr("href","applet.html?id=" + id);
               start_map(id)
-          });
-        
-        
-          $("a[href=#applet]").live("click", 
-                              function(e) {
-                                  id = $(this).data("applet");
-                                   $.mobile.changePage('applet.html')        
-                              }
-                        );
-          
-          
-          $( '#applet' ).live( 'pageinit',function(event){
-              applet_actions(id)
           });
         
         
