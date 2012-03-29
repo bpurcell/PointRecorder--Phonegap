@@ -214,9 +214,6 @@ function login_onSuccess(position) {
 
 function login() {
 
-    navigator.geolocation.getCurrentPosition(login_onSuccess, onError);
-
-
     user = $.cookie('user');
 
     if (user !== null)
@@ -230,6 +227,7 @@ function login() {
         $('#login_form').show();
         $('#logged_in').hide();
         $.cookie('user', null);
+        $('#my_listings').html('<li data-role="list-divider" role="heading">My Applets</li>');
 
     });
     $('#back_link').click(function() {
@@ -237,11 +235,9 @@ function login() {
         $('#login_error_message').hide();
         $('#login_success_message').hide();
 
-        navigator.geolocation.getCurrentPosition(login_onSuccess, onError);
     });
 
     $('#login_submit').click(function() {
-        navigator.geolocation.getCurrentPosition(login_onSuccess, onError);
 
         var output = $().crypt({
             method: "md5",
@@ -250,9 +246,7 @@ function login() {
 
         user = document.getElementById("username").value;
         pass = document.getElementById("password").value;
-        lat = document.getElementById("login_lat").value;
-        lng = document.getElementById("login_lng").value;
-        var full_url = serviceURL + 'login?jsoncallback=?&name=' + user + '&pass_hash=' + output + '&pass=' + pass + '&lat=' + lat + '&lng=' + lng;
+        var full_url = serviceURL + 'login?jsoncallback=?&name=' + user + '&pass_hash=' + output + '&pass=' + pass;
 
         $.getJSON(full_url,
         {
@@ -269,6 +263,15 @@ function login() {
                     user_admin: data.is_admin
                 }]
                 $.cookie('user', ids, {
+		            expires: 2592000000
+		        });
+		
+				who_am_i = {
+		            name: data.first_name + ' '+ data.last_name,
+		            email: data.email
+		        }
+
+		        $.cookie('who', who_am_i, {
 		            expires: 2592000000
 		        });
 
@@ -420,13 +423,6 @@ function applet_actions(id)
                     $('#form_serial').hide();
                     $('#success_message').show();
 
-                    $('#camera_image').click(function() {
-                        getImage(0);
-                    });
-                    $('#lib_image').click(function() {
-                        getImage(1);
-                    });
-
                 }
 
             });
@@ -437,4 +433,71 @@ function applet_actions(id)
 
     });
     // end getJSON
+}
+
+
+$('#camera_image').click(function() {
+                         getImage(0);
+                         });
+$('#lib_image').click(function() {
+                      getImage(1);
+                      });
+
+function getImage(sourceType) {
+    
+    $.mobile.showPageLoadingMsg();
+    
+    if (sourceType == 1)
+    {
+        var options = {
+        quality: 10,
+        destinationType: navigator.camera.DestinationType.FILE_URI,
+        sourceType: navigator.camera.PictureSourceType.PHOTOLIBRARY
+        };
+    } else
+    {
+        var options = {
+        quality: 10,
+        destinationType: navigator.camera.DestinationType.FILE_URI
+        };
+    }
+    
+    
+    // Retrieve image file location from specified source
+    navigator.camera.getPicture(uploadPhoto,
+                                function(message) {
+                                alert('get picture failed');
+                                },
+                                options
+                                );
+    
+}
+function uploadPhoto(imageURI) {
+    
+    var options = new FileUploadOptions();
+    options.fileKey = "file";
+    options.fileName = imageURI.substr(imageURI.lastIndexOf('/') + 1);
+    options.mimeType = "image/jpeg";
+    
+    var params = new Object();
+    params.location_id = document.getElementById("location_id").value;
+    
+    options.params = params;
+    options.chunkedMode = false;
+    
+    var ft = new FileTransfer();
+    ft.upload(imageURI, serviceURL + "upload_image", win, fail, options);
+}
+
+function win(r) {
+$.mobile.hidePageLoadingMsg();
+    alert(r.response);
+    
+    $('#image_successfully_uploaded').show();
+    
+}
+
+function fail(error) {
+    $.mobile.hidePageLoadingMsg();
+    alert("An error has occurred: Code = " = error.code);
 }

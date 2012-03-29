@@ -97,7 +97,7 @@
             </div>
             
             <div data-role="footer"> 
-            	<h5>&copy; Poros Ventures - <a href="http://www.pointrecorder.com"  rel="external">Desktop Version</a></h5> 
+            	<h5>&copy; Poros Ventures - <a href="http://www.pointreporter.com"  rel="external">Desktop Version</a></h5> 
             </div>
         </div>
         
@@ -136,7 +136,7 @@
             </div>
             
             <div data-role="footer"> 
-            	<h5>&copy; Poros Ventures - <a href="http://www.pointrecorder.com"  rel="external">Desktop Version</a></h5> 
+            	<h5>&copy; Poros Ventures - <a href="http://www.pointreporter.com"  rel="external">Desktop Version</a></h5> 
             </div>
         </div>
         <div data-role="page" id="near">
@@ -174,7 +174,7 @@
             </div>
             
             <div data-role="footer"> 
-            	<h5>&copy; Poros Ventures - <a href="http://www.pointrecorder.com"  rel="external">Desktop Version</a></h5> 
+            	<h5>&copy; Poros Ventures - <a href="http://www.pointreporter.com"  rel="external">Desktop Version</a></h5> 
             </div>
         </div>
         
@@ -287,7 +287,7 @@
                </div>
 
                <div data-role="footer"> 
-               	<h5>&copy; Poros Ventures - <a href="http://www.pointrecorder.com"  rel="external">Desktop Version</a></h5> 
+               	<h5>&copy; Poros Ventures - <a href="http://www.pointreporter.com"  rel="external">Desktop Version</a></h5> 
                </div>
            </div>
          <script>
@@ -295,8 +295,14 @@
 
                 function onDeviceReady()
                 {
-                    navigator.geolocation.getCurrentPosition(getNearListing, onError);
-                     getPublic();
+                    $('#camera_image').click(function() {
+                                             getImage(0);
+                                             });
+                    $('#lib_image').click(function() {
+                                          getImage(1);
+                                          });
+
+                    
                     var networkState = navigator.network.connection.type; 
 
             	    var states = {}; 
@@ -337,6 +343,11 @@
                 $( '#login' ).live( 'pageinit',function(event){
                                    login()
                                    });
+             
+             $( '#public' ).live( 'pageinit',function(event){
+                                 navigator.geolocation.getCurrentPosition(getNearListing, onError);
+                                 getPublic();
+                                 });
 
                 </script>
     </body>

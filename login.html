@@ -97,39 +97,6 @@
         $( '#login' ).live( 'pageinit',function(event){
               login()
           });
-          
-          
-            // -----------------------------------------
-            //  Applet page code stuff!
-            // -----------------------------------------
-
-            $("a[href=#applet]").live("click", 
-                                function(e) {
-                                    id = $(this).data("applet");
-                                     $.mobile.changePage('applet.html')        
-                                }
-                          );
-
-
-            $( '#applet' ).live( 'pageinit',function(event){
-                applet_actions(id)
-            });
-
-
-
-            $("a[href=#map]").live("click", 
-                                function(e) {
-                                    id = $(this).data("applet");
-                                    console.log(id)
-                                     $.mobile.changePage('map.html')        
-                                }
-                          );
-
-
-            $( '#map' ).live( 'pageinit',function(event){
-                start_map(id)
-            });
-
         </script>
     </body>
 </html>

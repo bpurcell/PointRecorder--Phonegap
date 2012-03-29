@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -6,14 +5,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>
         </title>
-
+        
         <link rel="apple-touch-icon" sizes="114x114" id="large_icon" href=""/>
         <link rel="apple-touch-icon" sizes="57x57" id="small_icon" href=""/>
+        
+        
+        
         
         <link rel="stylesheet" href="css/style.css" />
         <link rel="stylesheet" href="css/jqmobile.css" />
         
-         <script src="javascript/phonegap.js"></script>
+        <script src="javascript/phonegap.js"></script>
         <script src="javascript/jquery.js"></script>
         
         <script src="javascript/mobile.js"></script>
@@ -23,31 +25,16 @@
         
         <script src="javascript/jqmobile.js"></script>
         
-        
         <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+        
     </head>
     <body>   
             <div data-role="page" id="map">
                    <div data-theme="a" data-role="header">
-                       <h1>
-                           Point Recorder - Map
-                       </h1>
                        <div data-role="navbar" data-iconpos="top">
                            <ul>
                                <li>
-                                   <a href="index.html" rel="external" data-theme="" data-icon="home">
-                                       Home
-                                   </a>
-                               </li>
-                               <li>
-                                   <a href="index.html#public" rel="external" data-theme="" data-icon="grid">
-                                       Public
-                                   </a>
-                               </li>
-                               <li>
-                                   <a href="index.html#near" rel="external" data-theme="" data-icon="search">
-                                       Nearby
-                                   </a>
+                                   <a href="" id="back_to_applet" rel="external">Back to applet</a>
                                </li>
                            </ul>
                        </div>
@@ -56,22 +43,20 @@
                    <div data-role="content" id="content" style="height:400px;">
 
                    </div>
-                   
-                   <div data-role="footer" data-position="fixed"> 
-                        <div data-role="navbar" data-iconpos="top">
-                               <ul>
-                                   <li>
-                                      <a href="" id="back_to_applet" rel="external">Back to applet</a>
-                                   </li>
-                                </ul>
-                        </div>
-                   </div>
+
                </div>
                
                
 
         <script>
-        function getUrlVars() {
+            $(document).ready(function() {
+                              alert( 'This page was just hidden: ');
+                              });
+            $( '#map' ).live( 'pageinit',function(event){
+                            alert( 'This page was just hidden: ');
+                            });
+        function getUrlVars() 
+            {
             var vars = [], hash;
             var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
             for(var i = 0; i < hashes.length; i++)
@@ -82,12 +67,14 @@
             }
             return vars;
         }
+            
         
-        $( '#map' ).live( 'pageinit',function(event){
-            var id = getUrlVars()["id"];
-            $("#back_to_applet").attr("href","applet.html?id=" + id);
-              start_map(id)
-          });
+       // $( '#map' ).live( 'pageinit',function(event){
+       //     alert('live')
+       //     var id = getUrlVars()["id"];
+       //     $("#back_to_applet").attr("href","applet.html?id=" + id);
+       //       //start_map(id)
+       //   });
         
         
         </script>

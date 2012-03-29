@@ -23,7 +23,6 @@
         
         <script src="javascript/jqmobile.js"></script>
         
-        
         <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
     </head>
     <body>  
@@ -97,8 +96,8 @@
                                 <a href="" id="add_more_link" data-role="button">Add More</a>
                             
                            <div id="uploadoption"  data-role="controlgroup">
-                                <a id="camera_image" data-role="button">From Camera</a>
-                                <a id="lib_image" data-role="button">From Photo Library</a>
+                                <a id="camera_image" onclick="getImage(0)" data-role="button">From Camera</a>
+                                <a id="lib_image" onclick="getImage(1)" data-role="button">From Photo Library</a>
                 	    	</div>
                 	    	
                 	    	<input type="hidden" name='location_id' id='location_id' value=''>
@@ -113,14 +112,30 @@
                              <a href="" id="back_link" data-role="button">Back</a>
                         </div>
                         
-                        <a href="" id="map_link" data-role="button">View Map</a>
+                        <a href="#map" id="map" data-role="button">View Map</a>
                    </div>
                    
                    <div data-role="footer"> 
                    	<h5>&copy; Poros Ventures - <a href="http://www.pointrecorder.com"  rel="external">Desktop Version</a></h5> 
                    </div>
                </div>
-               
+        
+        <div data-role="page" id="map">
+            <div data-theme="a" data-role="header">
+                <div data-role="navbar" data-iconpos="top">
+                    <ul>
+                        <li>
+                            <a href="#applet" id="back_to_applet" rel="external">Back to applet</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div data-role="content" id="content" style="height:400px;">
+                
+            </div>
+            
+        </div>
                
 
         <script>
@@ -130,16 +145,20 @@
         function onDeviceReady()
         {
             navigator.geolocation.getCurrentPosition(onSuccess, onError);
-        }
 
-        $( '#applet' ).live( 'pageinit',function(event){
           var id = getUrlVars()["id"];
           
             $("#add_more_link").attr("href","applet.html?id=" + id);
             $("#back_link").attr("href","applet.html?id=" + id);
             $("#map_link").attr("href","map.html?id=" + id);
-            applet_actions(id)
-        });
+            applet_actions(id);
+
+        };
+            $( '#map' ).live( 'pageinit',function(event){
+                    var id = getUrlVars()["id"];
+                    $("#back_to_applet").attr("href","applet.html?id=" + id);
+                    start_map(id)
+                });
 
         
         </script>
